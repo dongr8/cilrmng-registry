@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+  --color-ink: #171514;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  --shell-border: #f1e7df;
+}
+
+html,
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+/* Never let a wide table or sheet break the mobile layout */
+img,
+svg,
+table {
+  max-width: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #fdfbf9;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #fed7aa;
+  color: #7c2d12;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-[#f1e7df] bg-white shadow-[0_1px_2px_rgba(23,21,20,0.04)];
+  }
+  .card-pad {
+    @apply p-5 sm:p-6;
+  }
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost,
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply border border-[#eadfd5] bg-white text-stone-700 hover:border-brand-300 hover:text-brand-700;
+  }
+  .btn-ghost {
+    @apply text-stone-600 hover:bg-brand-50 hover:text-brand-700;
+  }
+  .btn-danger {
+    @apply border border-rose-200 bg-white text-rose-600 hover:bg-rose-50;
+  }
+  .input {
+    @apply w-full rounded-xl border border-[#e6d9ce] bg-white px-3.5 py-2.5 text-sm text-stone-900 shadow-[0_1px_1px_rgba(23,21,20,0.02)] outline-none transition placeholder:text-stone-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-stone-500;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset;
+  }
+  .th {
+    @apply whitespace-nowrap px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-stone-500;
+  }
+  .td {
+    @apply whitespace-nowrap px-4 py-3 text-sm text-stone-700;
+  }
+  .eyebrow {
+    @apply inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-700;
+  }
+  .link {
+    @apply font-semibold text-brand-700 underline-offset-4 hover:underline;
+  }
+}
+
+.mesh {
+  background-image:
+    radial-gradient(600px 320px at 12% 0%, #ffedd5 0%, transparent 70%),
+    radial-gradient(520px 280px at 88% 10%, #ffd7b5 0%, transparent 65%),
+    linear-gradient(180deg, #fffdfb 0%, #fdfbf9 100%);
+}
+
+.grid-fade {
+  background-image: linear-gradient(to right, rgba(234, 88, 12, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(234, 88, 12, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 72%);
+}
+
+.scroll-thin::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #e7d8cb;
+  border-radius: 999px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-rise {
+  animation: rise 0.35s ease-out both;
+}
+
+@media print {
+  .no-print,
+  aside,
+  header.app-header {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  .print-area {
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .print-full {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
+
+/* ---------- A4 document output (guest & admin printouts) ---------- */
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+.a4-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 12mm 13mm;
+  box-sizing: border-box;
+}
+
+/* On phones/tablets the certificate scales to the viewport instead of
+   forcing a 210mm horizontal scroll; printing still uses true A4. */
+@media screen and (max-width: 860px) {
+  .a4-sheet {
+    width: 100%;
+    min-height: auto;
+    padding: 14px;
+  }
+  .a4-sheet table {
+    font-size: 10px;
+  }
+  .a4-sheet th,
+  .a4-sheet td {
+    padding: 4px 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .a4-sheet table,
+  .a4-sheet tbody,
+  .a4-sheet tr,
+  .a4-sheet th,
+  .a4-sheet td {
+    display: block;
+    width: 100% !important;
+  }
+  .a4-sheet tr {
+    border-bottom: 1px solid #eee9e3;
+    padding: 6px 0;
+  }
+  .a4-sheet th {
+    border: 0 !important;
+    padding: 0 0 1px;
+    font-size: 9px;
+    color: #a8a29e;
+  }
+  .a4-sheet td {
+    border: 0 !important;
+    padding: 0 0 6px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .a4-sheet td:last-child {
+    padding-bottom: 0;
+  }
+  .a4-sheet tr > td[colspan] {
+    display: none;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    width: 100%;
+  }
+
+  /* Keep crest watermark + red certification visible on paper and in PDF */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print,
+  aside,
+  header.app-header,
+  .print-hide {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-area,
+  .print-sheet {
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Exactly one page: fit the sheet to the printable area and never break */
+  .a4-sheet {
+    width: 190mm;
+    height: 277mm;
+    min-height: 0;
+    max-height: 277mm;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    overflow: hidden;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .a4-sheet table,
+  .a4-sheet tr,
+  .a4-sheet section,
+  .a4-sheet header,
+  .a4-sheet footer {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* undo small-screen stacking so print is always the true A4 grid */
+  .a4-sheet table,
+  .a4-sheet tbody {
+    display: table !important;
+    width: 100% !important;
+  }
+  .a4-sheet tr {
+    display: table-row !important;
+  }
+  .a4-sheet th,
+  .a4-sheet td {
+    display: table-cell !important;
+    border: 1px solid #e7e5e4 !important;
+  }
+
+  .certified-note {
+    border-color: #dc2626 !important;
+  }
+  .certified-note p {
+    color: #dc2626 !important;
+  }
+}
